@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:qr_reader/qr_reader.dart';
 
@@ -28,9 +30,18 @@ class KeyboardPage extends StatefulWidget {
 }
 
 class _KeyboardPageState extends State<KeyboardPage> {
-  final _detector = AndroidScannerManager(
-    targetSources: [257, 769],
-  );
+  late final ScannerManager _detector;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _detector = Platform.isAndroid
+        ? AndroidScannerManager(
+            targetSources: [257, 769],
+          )
+        : CommonScannerManager();
+  }
 
   @override
   Widget build(BuildContext context) {
