@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:qr_reader/qr_reader.dart';
+import 'package:qr_hid_reader/qr_hid_reader.dart';
 
 void main() {
   runApp(const MyApp());

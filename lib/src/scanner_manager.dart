@@ -35,6 +35,8 @@ abstract class ScannerManager {
     _manager.keyMessageHandler = _handle;
   }
 
+  bool get _shouldStopPropagation => true;
+
   /// Publisher that notifies about reading info by scanner.
   Stream<String> get scanned => _controller.stream;
 
@@ -51,7 +53,9 @@ abstract class ScannerManager {
     if (rawEvent != null) {
       if (_checkIsTargetEvent(rawEvent)) {
         _maybeNewInfo(rawEvent);
-        return true;
+        if (_shouldStopPropagation) {
+          return true;
+        }
       }
     }
 
@@ -80,6 +84,8 @@ abstract class ScannerManager {
 }
 
 /// Implementation of [ScannerManager] that catch every event.
+///
+/// This manager will not stop propagation of the event that caught.
 class CommonScannerManager extends ScannerManager {
   CommonScannerManager({
     super.keyEventManager,
@@ -87,19 +93,29 @@ class CommonScannerManager extends ScannerManager {
   });
 
   @override
+  bool get _shouldStopPropagation => false;
+
+  @override
   bool _checkIsTargetEvent(RawKeyEvent event) => true;
 }
 
 /// Implementation of [ScannerManager] that uses delegate to determine
 /// if the event should be handled.
+///
+/// Propagation behavior of the event that caught can be set by [stopWhenCatch].
 class ScannerManagerWithDelegate extends ScannerManager {
   final bool Function(RawKeyEvent) delegate;
+  final bool stopWhenCatch;
 
   ScannerManagerWithDelegate({
     super.keyEventManager,
     super.eventDuration,
     required this.delegate,
+    this.stopWhenCatch = true,
   });
+
+  @override
+  bool get _shouldStopPropagation => stopWhenCatch;
 
   @override
   bool _checkIsTargetEvent(RawKeyEvent event) => delegate(event);

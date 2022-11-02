@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  qr_reader:
+  qr_hid_reader:
     path: ../
 
 dev_dependencies:
