@@ -1,4 +1,4 @@
-name: qr_reader
+name: qr_hid_reader
 description: Implementation of the QR scanner listener that handles output as keyboard events.
 version: 0.0.1
 homepage: https://bakersoft.de/de/
