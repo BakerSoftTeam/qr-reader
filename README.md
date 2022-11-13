@@ -22,7 +22,7 @@ It has a property `scanned` that is a publisher of any info which read by scanne
 Now available few types of the ScannerManager.
 
 ### CommonScannerManager
-Simplest manager that just inform about information was scanned. 
+Simplest manager that just informs about information was scanned. 
 Doesn't stop propagation of the scanned information.
 
 ### ScannerManagerWithDelegate
